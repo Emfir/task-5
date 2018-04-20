@@ -4,6 +4,7 @@ import TicTacToe
 import pickle
 import random
 import enums
+from connection import message
 
 host = '127.0.0.1'
 port = 5005
@@ -37,42 +38,57 @@ class server():
 
         var = random.randint(0,1)
         print(var)
+
+        # while 1:
+        #     try:
+        #         input[1].send(pickle._dumps("chose game"))
+        #         cos = input[1].recv(10240)
+        #         a =  ( cos.decode() )
+        #         print(a)
+        #     except Exception as error:
+        #         print(error)
+
         while 1:
 
 
-            input[var % 2 + 1].send(pickle._dumps(gameObject.getBoard()))
-            input[var % 2 + 1].send(pickle._dumps("next move ?"))
+
+
+            input[var % 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.gameInformationDoNotExpectResponse,  gameObject.getBoard())))
+            input[var % 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.informationRequireResponse,  "next move ?")))
+
 
             try:
-                first, second = map(int, input[var % 2 + 1].recv(10240).decode().split())
+                first, second = map(int, pickle.loads(input[var % 2 + 1].recv(10240)).getData().split())
 
 
             except Exception as error:
-                input[var % 2 + 1].send(pickle._dumps("write proper position"))
+                input[var % 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.informationRequireResponse,  "write proper position")))
                 continue
 
             anser = gameObject.nextMove([first, second])
-            input[var % 2 + 1].send(pickle._dumps(gameObject.getBoard()))
+            input[var % 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.gameInformationDoNotExpectResponse,  gameObject.getBoard())))
             var += 1
 
             if enums.game_state.game_is_not_finished == anser: continue
             if enums.game_state.draw == anser:
 
-                input[var % 2 + 1].send(pickle._dumps("draw"))
-                input[(var - 1) % 2 + 1].send(pickle._dumps("draw"))
+                input[var % 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.finalMessageFromTheGame,  enums.game_state.draw)))
+                input[(var - 1) % 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.finalMessageFromTheGame,  enums.game_state.draw)))
                 print("draw")
                 break
             elif anser in {enums.game_state.o_won, enums.game_state.x_won}:
-                input[var % 2 + 1].send(pickle._dumps(gameObject.getBoard()))
-                input[(var - 1) % 2 + 1].send(pickle._dumps(gameObject.getBoard()))
-                input[var % 2 + 1].send(pickle._dumps(anser.value))
-                input[(var - 1) % 2 + 1].send(pickle._dumps(anser.value))
+                input[var % 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.gameInformationDoNotExpectResponse,  gameObject.getBoard())))
+
+                input[(var - 1)% 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.gameInformationDoNotExpectResponse,  gameObject.getBoard())))
+
+                input[(var - 1) % 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.finalMessageFromTheGame,  anser)))
+                input[var % 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.finalMessageFromTheGame,  anser)))
 
                 print(anser.value)
                 break
             else:
                 var -= 1
-                input[var  % 2 + 1].send(pickle._dumps(anser.value))
+                input[var % 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.gameInformationDoNotExpectResponse,  anser)))
 
 
 

@@ -20,3 +20,10 @@ class resultsOfTheGuess(Enum):
     tooSmall = "too Small"
     tooBig   = "too Big"
     goodGuess = "good guess"
+
+
+class typeOfMessage (Enum):
+    informationRequireResponse = 0
+    gameInformationDoNotExpectResponse = 1
+    actionInformation = 3
+    finalMessageFromTheGame = 4
