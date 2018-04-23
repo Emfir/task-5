@@ -1,6 +1,6 @@
 import connectionWithClients
 import waitingState1
-from connection import message
+import message
 import enums
 import GameFactory
 
@@ -18,7 +18,7 @@ class gameManager():
             while 1:
 
                 server.sendMessage(server.numberOfClients(),
-                                            message.message(enums.typeOfMessage.informationRequireResponse,
+                                   message.message(enums.typeOfMessage.informationRequireResponse,
                                                             "What Game Do you want to play? (G)the Number Guesser or the (T)TickTackToe?"))
                 response = server.receiveMessage(server.numberOfClients())
 

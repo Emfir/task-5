@@ -1,4 +1,4 @@
-from connection import client
+import client
 import gameManager
 
 

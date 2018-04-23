@@ -1,7 +1,8 @@
 import NumberGuesser
 import enums
 import connectionWithClients
-from connection import message
+import message
+
 
 class numberGuesserController :
     def start(self, server: connectionWithClients.connectionWithClients):
@@ -12,7 +13,7 @@ class numberGuesserController :
             try:
                 server.sendMessage(server.numberOfClients(),
                                    message.message(enums.typeOfMessage.informationRequireResponse,
-                                                   "whats your guess?") )
+                                                   "whats your guess?"))
                 clientNumber = int (server.receiveMessage(server.numberOfClients()).getData())
 
             except Exception as error:

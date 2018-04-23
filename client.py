@@ -1,6 +1,6 @@
 import pickle
 import socket
-from connection import message
+import message
 import enums
 
 TCP_IP = '127.0.0.1'

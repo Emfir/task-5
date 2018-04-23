@@ -1,10 +1,8 @@
 import select
 import socket
-import TicTacToe
 import pickle
-import random
 import enums
-from connection import message
+import message
 
 host = '127.0.0.1'
 port = 5005

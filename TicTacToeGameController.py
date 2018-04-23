@@ -1,7 +1,7 @@
 import enums
 import random
 import connectionWithClients
-from connection import message
+import message
 import TicTacToe
 
 class TicTacToeGameController:
@@ -21,7 +21,7 @@ class TicTacToeGameController:
 
         while 1:
             server.sendMessage(var % 2 + 1,
-                               message.message(enums.typeOfMessage.gameInformationDoNotExpectResponse, gameObject.getBoard() ))
+                               message.message(enums.typeOfMessage.gameInformationDoNotExpectResponse, gameObject.getBoard()))
             server.sendMessage(var % 2 + 1,
                                message.message(enums.typeOfMessage.informationRequireResponse, "next move ?"))
 
@@ -33,7 +33,7 @@ class TicTacToeGameController:
             except Exception as error:
                 server.sendMessage(var % 2 + 1,
                                    message.message(enums.typeOfMessage.informationRequireResponse,
-                                                   "write proper position") )
+                                                   "write proper position"))
                 continue
 
             anser = gameObject.nextMove([first, second])
@@ -46,8 +46,8 @@ class TicTacToeGameController:
             if enums.game_state.draw == anser:
 
                 server.sendMessage(var % 2 + 1,
-                                   message.message(enums.typeOfMessage.finalMessageFromTheGame, enums.game_state.draw) )
-                server.sendMessage( (var - 1) % 2 + 1,
+                                   message.message(enums.typeOfMessage.finalMessageFromTheGame, enums.game_state.draw))
+                server.sendMessage((var - 1) % 2 + 1,
                                    message.message(enums.typeOfMessage.finalMessageFromTheGame, enums.game_state.draw))
 
                 print("draw")
@@ -56,17 +56,17 @@ class TicTacToeGameController:
                 server.sendMessage(var % 2 + 1,
                                    message.message(enums.typeOfMessage.gameInformationDoNotExpectResponse,
                                                    gameObject.getBoard()))
-                server.sendMessage( (var - 1) % 2 + 1,
+                server.sendMessage((var - 1) % 2 + 1,
                                    message.message(enums.typeOfMessage.gameInformationDoNotExpectResponse,
                                                    gameObject.getBoard()))
 
-                server.sendMessage( var % 2 + 1,
+                server.sendMessage(var % 2 + 1,
                                    message.message(enums.typeOfMessage.finalMessageFromTheGame,
                                                    anser))
 
-                server.sendMessage( (var - 1) % 2 + 1,
-                               message.message(enums.typeOfMessage.finalMessageFromTheGame,
-                                               anser))
+                server.sendMessage((var - 1) % 2 + 1,
+                                   message.message(enums.typeOfMessage.finalMessageFromTheGame,
+                                                   anser))
 
 
                 print(anser.value)
