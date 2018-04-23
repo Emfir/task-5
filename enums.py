@@ -1,5 +1,10 @@
 from enum import Enum
 
+
+class game_type(Enum):
+    TicTackToe = 0
+    gameGuesser = 1
+
 class game_state(Enum):
     x_won = "x"
     o_won = "o"

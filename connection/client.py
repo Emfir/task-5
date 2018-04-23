@@ -21,20 +21,23 @@ class client():
 
 
 
-        messageObj = s.recv(10240)
-        print(messageObj.decode())
+        # messageObj = s.recv(10240)
+        # print(messageObj.decode())
 
         while 1:
             messageObj = pickle._loads(s.recv(10240))
 
             if messageObj.getTittle() == enums.typeOfMessage.gameInformationDoNotExpectResponse:
-                self.printBoard(messageObj.getData())
+                if   isinstance( messageObj.getData(), list):
+                    self.printBoard(messageObj.getData())
+                else:
+                    print(messageObj.getData())
             elif messageObj.getTittle() == enums.typeOfMessage.informationRequireResponse:
                 print(messageObj.getData())
                 s.send(pickle.dumps(message.message(enums.typeOfMessage.informationRequireResponse, str(input()))))
             else:
                 print(messageObj.getData())
-                break;
+                break
             # if isinstance(messageObj.getData(), list):
             #     self.printBoard(messageObj.getData())
             #     continue
