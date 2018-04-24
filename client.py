@@ -20,10 +20,6 @@ class client():
         s.connect((TCP_IP, TCP_PORT))
 
 
-
-        # messageObj = s.recv(10240)
-        # print(messageObj.decode())
-
         while 1:
             messageObj = pickle._loads(s.recv(10240))
 
@@ -38,18 +34,6 @@ class client():
             else:
                 print(messageObj.getData())
                 break
-            # if isinstance(messageObj.getData(), list):
-            #     self.printBoard(messageObj.getData())
-            #     continue
-            # # elif messageObj.getData().value in {"x", "o"}:
-            # #     print (messageObj + " won")
-            # #     break
-            # # elif messageObj.getData().value== enums.error:
-            # #     print (messageObj)
-            # #     continue
-            # else:
-            #     print(messageObj.getData())
-
 
 
 

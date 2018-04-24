@@ -11,6 +11,7 @@ class gameManager():
         self.serverState = waitingState1.waitingState1()
 
     def start(self):
+        """" starts management of the game form the server perspective """
         server = connectionWithClients.connectionWithClients()
         while 1:
             server.findPlayer()

@@ -11,6 +11,7 @@ maxsize = 1024
 
 
 class connectionWithClients():
+    """"class responsible for connection with clients"""
     def __init__(self):
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.bind((host, port))
@@ -20,6 +21,7 @@ class connectionWithClients():
 
 
     def findPlayer(self):
+        """"finds client"""
 
 
         self.inputready, self.outputready, self.exceptready = select.select(self.input, [], [])
@@ -36,16 +38,19 @@ class connectionWithClients():
                 self.var += 1
 
     def servedPlayer(self):
+        """"removes newest client from the list """
         self.input[-1].close()
         self.input.pop()
         self.var -= 1
 
     def sendMessage(self, client, letter):
+
         self.input[client].send(pickle.dumps(letter))
 
     def receiveMessage(self, client):
         return pickle.loads( self.input[client].recv(10240) )
 
     def numberOfClients(self):
+        """"returns current number of clients"""
         return self.var - 1
 
