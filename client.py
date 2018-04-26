@@ -1,6 +1,6 @@
 import pickle
 import socket
-from connection import message
+import message
 import enums
 
 TCP_IP = '127.0.0.1'
@@ -20,33 +20,20 @@ class client():
         s.connect((TCP_IP, TCP_PORT))
 
 
-
-        messageObj = s.recv(10240)
-        print(messageObj.decode())
-
         while 1:
             messageObj = pickle._loads(s.recv(10240))
 
             if messageObj.getTittle() == enums.typeOfMessage.gameInformationDoNotExpectResponse:
-                self.printBoard(messageObj.getData())
+                if   isinstance( messageObj.getData(), list):
+                    self.printBoard(messageObj.getData())
+                else:
+                    print(messageObj.getData())
             elif messageObj.getTittle() == enums.typeOfMessage.informationRequireResponse:
                 print(messageObj.getData())
                 s.send(pickle.dumps(message.message(enums.typeOfMessage.informationRequireResponse, str(input()))))
             else:
                 print(messageObj.getData())
-                break;
-            # if isinstance(messageObj.getData(), list):
-            #     self.printBoard(messageObj.getData())
-            #     continue
-            # # elif messageObj.getData().value in {"x", "o"}:
-            # #     print (messageObj + " won")
-            # #     break
-            # # elif messageObj.getData().value== enums.error:
-            # #     print (messageObj)
-            # #     continue
-            # else:
-            #     print(messageObj.getData())
-
+                break
 
 
 
