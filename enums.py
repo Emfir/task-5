@@ -27,3 +27,10 @@ class typeOfMessage (Enum):
     gameInformationDoNotExpectResponse = 1
     actionInformation = 3
     finalMessageFromTheGame = 4
+
+class gameName(Enum):
+    TickTackToe = 0
+    gameGuesser = 1
+
+
+

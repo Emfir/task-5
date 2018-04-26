@@ -49,10 +49,6 @@ class server():
         #         print(error)
 
         while 1:
-
-
-
-
             input[var % 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.gameInformationDoNotExpectResponse,  gameObject.getBoard())))
             input[var % 2 + 1].send(pickle._dumps(message.message(enums.typeOfMessage.informationRequireResponse,  "next move ?")))
 
